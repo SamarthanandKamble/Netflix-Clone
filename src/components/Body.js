@@ -1,9 +1,9 @@
 import React from "react";
 import { LandingPage } from "./LandingPage";
-import Header from "./Header";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Browse from "./Browse";
 import SignIn from "./SignIn";
+import SignupForm from "./SignupForm";
 const Body = () => {
   const appRouter = createBrowserRouter([
     {
@@ -17,6 +17,10 @@ const Body = () => {
     {
       path: "/signin",
       element: <SignIn />,
+    },
+    {
+      path: "/signupform",
+      element: <SignupForm />,
     },
   ]);
   return <RouterProvider router={appRouter}></RouterProvider>;

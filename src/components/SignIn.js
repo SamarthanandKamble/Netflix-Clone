@@ -1,9 +1,13 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { validateSignInData } from "../utils/validateData";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
 const SignIn = () => {
   const email = useRef();
   const password = useRef();
+  const navigate = useNavigate();
   const [invalidData, setInvalidData] = useState(null);
 
   const handleSignIn = () => {
@@ -11,7 +15,27 @@ const SignIn = () => {
     const passwordValue = password.current.value;
     const errorMessage = validateSignInData(emailValue, passwordValue);
     setInvalidData(errorMessage);
+
+    if (errorMessage) {
+      return;
+    } else {
+      fetchUserFromFirebase(emailValue, passwordValue);
+      navigate("/browse");
+    }
   };
+
+  const fetchUserFromFirebase = (email, password) => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+    
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        setInvalidData(errorMessage);
+      });
+  };
+
   return (
     <div>
       <img
@@ -30,7 +54,7 @@ const SignIn = () => {
 
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="flex flex-col flex-wrap justify-center content-center items-start p-10  w-4/12 m-auto bg-black opacity-90  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-8"
+        className="flex flex-col flex-wrap justify-center content-center items-start p-10  w-4/12 m-auto bg-black opacity-90 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-8"
       >
         <span className="text-3xl py-2 text-white">Sign In</span>
         <input
