@@ -19,17 +19,16 @@ const SignupForm = () => {
     const errorMessage = validateSignupPassword(passwordValue);
     setCheckPassword(errorMessage);
     if (errorMessage) return;
-    dispatch(addUser({ ...email, password: passwordValue }));
     addUserToDb(email.email, passwordValue);
-    navigate("/browse");
   };
 
   const addUserToDb = (email, password) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed up
+        navigate("/browse");
         const user = userCredential.user;
         console.log("user:", user);
+        dispatch(addUser({ email, uid: user.uid }));
       })
       .catch((error) => {
         const errorCode = error.code;

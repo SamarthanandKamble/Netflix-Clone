@@ -20,15 +20,14 @@ const SignIn = () => {
       return;
     } else {
       fetchUserFromFirebase(emailValue, passwordValue);
-      navigate("/browse");
     }
   };
 
   const fetchUserFromFirebase = (email, password) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        navigate("/browse");
         const user = userCredential.user;
-    
       })
       .catch((error) => {
         const errorMessage = error.message;
