@@ -3,10 +3,14 @@ import { Link } from "react-router-dom";
 import { validateSignInData } from "../utils/validateData";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { NETFLIX_LOGO, NETFLIX_WALLPAPER } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/Redux/userSlice";
 import { useNavigate } from "react-router-dom";
 const SignIn = () => {
   const email = useRef();
   const password = useRef();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [invalidData, setInvalidData] = useState(null);
 
@@ -19,36 +23,34 @@ const SignIn = () => {
     if (errorMessage) {
       return;
     } else {
-      fetchUserFromFirebase(emailValue, passwordValue);
+      addUserToDb(emailValue, passwordValue);
     }
   };
 
-  const fetchUserFromFirebase = (email, password) => {
+  const addUserToDb = (email, password) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        const { email, uid } = userCredential.user;
+        dispatch(addUser({ email: email, uid: uid }));
         navigate("/browse");
-        const user = userCredential.user;
       })
       .catch((error) => {
         const errorMessage = error.message;
         setInvalidData(errorMessage);
+        console.warn(error.message);
       });
   };
 
   return (
     <div>
       <img
-        src="https://assets.nflxext.com/ffe/siteui/vlv3/ca6a7616-0acb-4bc5-be25-c4deef0419a7/c5af601a-6657-4531-8f82-22e629a3795e/IN-en-20231211-popsignuptwoweeks-perspective_alpha_website_large.jpg"
+        src={NETFLIX_WALLPAPER}
         alt="wallpaper"
         className="h-screen w-screen"
       />
 
       <div className="bg-gradient-to-b from-black w-screen absolute top-0 h-18">
-        <img
-          src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
-          alt="netflix-logo"
-          className="w-48 h-full "
-        />
+        <img src={NETFLIX_LOGO} alt="netflix-logo" className="w-48 h-full " />
       </div>
 
       <form

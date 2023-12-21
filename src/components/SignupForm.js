@@ -2,16 +2,12 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { validateSignupPassword } from "../utils/validateData";
 import { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addUser } from "../utils/Redux/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-
 const SignupForm = () => {
   const email = useSelector((state) => state.user);
-
-  const password = useRef();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const password = useRef();
   const [checkPassword, setCheckPassword] = useState(null);
 
   const handleSignUpForm = () => {
@@ -26,14 +22,9 @@ const SignupForm = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         navigate("/browse");
-        const user = userCredential.user;
-        console.log("user:", user);
-        dispatch(addUser({ email, uid: user.uid }));
       })
       .catch((error) => {
-        const errorCode = error.code;
         setCheckPassword(error.message);
-        // ..
       });
   };
 
@@ -66,6 +57,11 @@ const SignupForm = () => {
           placeholder="Enter Password"
           className="p-4 w-full m-2 p-2  bg-gray-900 text-white border-2 border-solid border-slate-400 rounded-lg"
         />
+        {checkPassword && (
+          <p className="font-bold text-red-500 text-center m-4">
+            {checkPassword}
+          </p>
+        )}
         <button
           className="p-4 rounded-lg bg-red-600 w-6/12 text-white font-bold"
           onClick={handleSignUpForm}
@@ -73,9 +69,6 @@ const SignupForm = () => {
           Sign Up
         </button>
       </form>
-      {checkPassword && (
-        <p className="font-bold text-red-500 text-center">{checkPassword}</p>
-      )}
     </>
   );
 };

@@ -1,31 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { removeUser } from "../utils/Redux/userSlice";
+import { addUser, removeUser } from "../utils/Redux/userSlice";
 import { auth } from "../utils/firebase";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { NETFLIX_LOGO } from "../utils/constants";
+
 const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
+  const navigate = useNavigate();
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
         dispatch(removeUser());
       })
       .catch((error) => {
-        // An error happened.
+        console.warn(error);
       });
   };
 
+  useEffect(() => {
+    
+    const subscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email } = user;
+        navigate("/browse");
+        dispatch(addUser({ uid: uid, email: email }));
+      } else {
+        navigate("/");
+      }
+    });
+
+    return () => subscribe();
+  }, []);
   return (
     <div className="absolute w-full flex flex-wrap items-center justify-around border-amber-600 bg-gradient-to-b from-black">
       <div>
-        <img
-          src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
-          alt="netflix-logo"
-          className="w-48 h-45"
-        />
+        <img src={NETFLIX_LOGO} alt="netflix-logo" className="w-48 h-45" />
       </div>
 
       <ul className="text-white flex h-12 ">
@@ -38,7 +51,7 @@ const Header = () => {
               className="p-2.5 border bg-red-600 rounded-md cursor-pointer"
               onClick={handleSignOut}
             >
-              Sign Out
+              Log Out
             </li>
           </Link>
         ) : (
