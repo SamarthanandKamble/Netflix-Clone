@@ -50,7 +50,7 @@ const SignIn = () => {
       />
 
       <div className="bg-gradient-to-b from-black w-screen absolute top-0 h-18">
-        <img src={NETFLIX_LOGO} alt="netflix-logo" className="w-48 h-full " />
+        <img src={NETFLIX_LOGO} alt="netflix-logo" className="w-32 h-full " />
       </div>
 
       <form

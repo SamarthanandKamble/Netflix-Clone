@@ -1,12 +1,14 @@
 import React from "react";
 import Header from "./Header";
-import VideoContainer from "./VideoContainer";
-
+import MovieContainer from "./MovieContainer";
+import { useSelector } from "react-redux";
+import GptPage from "./GptPage";
 const Browse = () => {
+  const gptToggler = useSelector((state) => state.gpt?.gptSearchOpen);
   return (
     <div>
       <Header />
-      <VideoContainer />
+      {gptToggler ? <GptPage /> : <MovieContainer />}
     </div>
   );
 };

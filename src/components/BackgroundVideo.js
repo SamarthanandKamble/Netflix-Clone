@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import MainVideoInfo from "./MainVideoInfo";
 import { OPTIONS } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrailerVideo } from "../utils/Redux/moviesSlice";
-const MainVideo = ({ mainVideo }) => {
+
+const BackgroundVideo = ({ mainVideo }) => {
   const dispatch = useDispatch();
   const key = useSelector((state) => state.movie?.trailerVideoKey);
-
   const { id } = mainVideo;
   useEffect(() => {
     fetchTheTrailerVideo();
@@ -33,16 +32,14 @@ const MainVideo = ({ mainVideo }) => {
   };
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full bg-gradient-to-r from-black">
       <iframe
-        src={`https://www.youtube.com/embed/${key}?autoplay=1&mute=1`}
         title="YouTube video player"
-        className="w-full h-full aspect-video bg-black bg-gradient-to-r from-black"
-        allow="autoplay"
+        src={`https://www.youtube.com/embed/${key}?autoplay=1&mute=1`}
+        className="w-full aspect-video "
       />
-      <MainVideoInfo mainVideo={mainVideo} />
     </div>
   );
 };
 
-export default MainVideo;
+export default BackgroundVideo;
