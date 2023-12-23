@@ -1,6 +1,6 @@
 const languageConfig = {
   English: {
-    searchBtn: "English",
+    searchBtn: "Search",
     gptSearchBarPlaceholder: "Enter the movie name you want to search",
   },
   Hindi: {

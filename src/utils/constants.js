@@ -24,3 +24,6 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "hindi", name: "Hindi" },
   { identifier: "marathi", name: "Marathi" },
 ];
+
+export const OPEN_AI_KEY =
+  "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";
