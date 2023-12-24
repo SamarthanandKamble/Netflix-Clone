@@ -1,5 +1,3 @@
-import { BEARER_TOKEN } from "../api_key";
-
 export const NETFLIX_LOGO =
   "https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png";
 
@@ -10,8 +8,7 @@ export const OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjOGUyMTkyM2M4NDZmOGNlOTE3OTdhZmIyODIwYmE5MSIsInN1YiI6IjY1ODNmZTY1ZTI5NWI0M2JjNzY4ZjExNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.6JaZ3r5UdCG1rj42NAVVv4uwQW9tQXHVZnMR102KoJU",
+    Authorization: process.env.REACT_APP_TMDB_API_BEARER,
   },
 };
 
@@ -24,6 +21,3 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "hindi", name: "Hindi" },
   { identifier: "marathi", name: "Marathi" },
 ];
-
-export const OPEN_AI_KEY =
-  "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";
