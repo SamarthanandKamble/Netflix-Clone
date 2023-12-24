@@ -2,13 +2,14 @@ import React, { useRef } from "react";
 import MovieCard from "./MovieCard";
 import MovieListTitle from "./MovieListTitle";
 import { useSelector } from "react-redux";
-
+import movieListLanguageConfig from "../utils/movieListLanguageConfig";
 const MovieList = () => {
   const movies = useSelector((state) => state.movie?.movieList);
   const popularMovies = useSelector((state) => state.movie?.popularMoviesList);
   const topRatedMovies = useSelector(
     (state) => state.movie?.topRatedMoviesList
   );
+  const lang = useSelector((state) => state.langConfig?.lang);
 
   const scrollContainerNowPlaying = useRef(null);
   const scrollContainerTopRated = useRef(null);
@@ -31,7 +32,10 @@ const MovieList = () => {
   };
   return (
     <div className="-mt-40 pl-8">
-      <MovieListTitle title={"Now Playing"} onScroll={handleNowPlayingScroll} />
+      <MovieListTitle
+        title={movieListLanguageConfig[lang].nowPlaying}
+        onScroll={handleNowPlayingScroll}
+      />
       <div
         className="flex overflow-x-hidden p-4"
         ref={scrollContainerNowPlaying}
@@ -43,7 +47,10 @@ const MovieList = () => {
             </div>
           ))}
       </div>
-      <MovieListTitle title={"Popular Movies"} onScroll={handlePopularScroll} />
+      <MovieListTitle
+        title={movieListLanguageConfig[lang].popularMovies}
+        onScroll={handlePopularScroll}
+      />
       <div className="flex overflow-x-hidden p-4" ref={scrollContainerPopular}>
         {popularMovies &&
           popularMovies.map((movie) => (
@@ -53,7 +60,7 @@ const MovieList = () => {
           ))}
       </div>
       <MovieListTitle
-        title={"Top Rated Movies"}
+        title={movieListLanguageConfig[lang].topRatedMovies}
         onScroll={handleTopRatedScroll}
       />
       <div

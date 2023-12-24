@@ -36,7 +36,7 @@ const BackgroundVideo = ({ mainVideo }) => {
       <iframe
         title="YouTube video player"
         src={`https://www.youtube.com/embed/${key}?autoplay=1&mute=1`}
-        className="w-full aspect-video "
+        className="w-full aspect-video pointer-events-none"
       />
     </div>
   );

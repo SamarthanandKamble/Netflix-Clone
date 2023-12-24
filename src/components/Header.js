@@ -8,11 +8,12 @@ import { NETFLIX_LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
 import { gptSearchToggler } from "../utils/Redux/gptSlice";
 import useCheckForAuthChange from "../utils/Hooks/useCheckForAuthChange";
 import { updateLanguage } from "../utils/Redux/configSlice";
-
+import headerLanguageConfig from "../utils/headerLanguageConfig";
 const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const gptToggler = useSelector((state) => state.gpt?.gptSearchOpen);
+  const lang = useSelector((state) => state.langConfig?.lang);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -46,10 +47,12 @@ const Header = () => {
             className="px-2 py-1 mx-2 font-semibold rounded-lg bg-black opacity-90 cursor-pointer"
             onClick={toggleGptSearch}
           >
-            {gptToggler ? "Homepage" : "GptSearch"}
+            {gptToggler
+              ? headerLanguageConfig[lang].homepage
+              : headerLanguageConfig[lang].gptSearchBtn}
           </li>
         )}
-        {user && gptToggler && (
+        {user && (
           <select
             className="pl-2 py-1 mr-2 font-semibold rounded-md bg-black opacity-90"
             onChange={handleLanguageUpdate}
@@ -67,13 +70,13 @@ const Header = () => {
               className="bg-red-600 rounded-lg cursor-pointer px-2 py-1 font-semibold"
               onClick={handleSignOut}
             >
-              Log Out
+              {headerLanguageConfig[lang].LogoutBtn}
             </li>
           </Link>
         ) : (
           <Link to="/signin">
             <li className="bg-red-600 rounded-md cursor-pointer px-2 py-1 font-semibold">
-              Sign In
+              {headerLanguageConfig[lang].SignInBtn}
             </li>
           </Link>
         )}

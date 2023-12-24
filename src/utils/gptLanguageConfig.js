@@ -3,11 +3,11 @@ const languageConfig = {
     searchBtn: "Search",
     gptSearchBarPlaceholder: "Enter the movie name you want to search",
   },
-  Hindi: {
+  हिंदी: {
     searchBtn: "खोज",
     gptSearchBarPlaceholder: "वह मूवी नाम दर्ज करें जिसे आप खोजना चाहते हैं",
   },
-  Marathi: {
+  मराठी: {
     searchBtn: "शोध",
     gptSearchBarPlaceholder:
       "आपण शोधू इच्छित असलेल्या चित्रपटाचे नाव प्रविष्ट करा",

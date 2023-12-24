@@ -18,6 +18,6 @@ export const TOP_RATED_MOVIES_URL = `https://api.themoviedb.org/3/movie/top_rate
 
 export const SUPPORTED_LANGUAGES = [
   { identifier: "en", name: "English" },
-  { identifier: "hindi", name: "Hindi" },
-  { identifier: "marathi", name: "Marathi" },
+  { identifier: "hindi", name: "हिंदी" },
+  { identifier: "marathi", name: "मराठी" },
 ];

@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { languageConfig } from "../utils/languageConfig";
+import { languageConfig } from "../utils/gptLanguageConfig";
 import { addGptMovies } from "../utils/Redux/gptSlice";
 import { OPTIONS } from "../utils/constants";
 
 const GptSearchBar = () => {
-  const lang = useSelector((state) => state.config?.lang);
+  const lang = useSelector((state) => state.langConfig?.lang  );
   const movies = useSelector((state) => state.gpt?.gptSearchMovie);
   const dispatch = useDispatch();
   const searchText = useRef(null);
